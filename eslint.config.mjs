@@ -10,12 +10,11 @@ export default defineConfig([
   },
   {
     files: ["**/*.{js,mjs,cjs}"],
-    languageOptions: { 
-      globals: { ...globals.browser, ...globals.node, ...globals.jest }, 
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node, ...globals.jest },
       rules: {
-        ...pluginJest.configs.recommended.rules
-      } 
+        ...pluginJest.configs.recommended.rules,
+      },
     },
   },
-  
 ]);
