@@ -6,8 +6,8 @@ test("Create a ship with a valid length", () => {
 
 test("Create a ship with an invalid length", () => {
   expect(() => new Ship(0)).toThrow();
-  expect(() => new Ship(5)).toThrow();
-  expect(() => new Ship(4)).not.toThrow();
+  expect(() => new Ship(6)).toThrow();
+  expect(() => new Ship(5)).not.toThrow();
 });
 
 test("Hit a ship once", () => {

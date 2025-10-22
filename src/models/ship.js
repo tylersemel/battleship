@@ -11,7 +11,7 @@ class Ship {
   }
 
   #checkValidLength(length) {
-    return !(length <= 0 || length > 4);
+    return !(length <= 0 || length > 5);
   }
 
   hit() {
