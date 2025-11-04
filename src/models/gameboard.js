@@ -41,29 +41,29 @@ export class Gameboard {
     return x >= 0 && y >= 0 && x < GRID_SIZE && y < GRID_SIZE;
   }
 
-  #getShipCoordinates(name) {}
+  #isValidPlacement(x, y) {
+    return this.#isValidCoord(x, y) && this.grid[x][y] === BLANK;
+  }
 
   //if able to place ship return true, otherwise false
   placeShip(ship, x, y, isHorizontal) {
-    if (!this.#isValidCoord(x, y)) {
-      return false;
-    }
-
-    if (isHorizontal) {
-      for (let i = 0; i < ship.length; i++) {
-        if (this.#isValidCoord(x, y + i) && this.grid[x][y + i] === BLANK) {
-          this.grid[x][y + i] = ship;
-        } else {
+    for (let i = 0; i < ship.length; i++) {
+      if (isHorizontal) {
+        if (!this.#isValidPlacement(x, y + i)) {
+          return false;
+        }
+      } else {
+        if (!this.#isValidPlacement(x + i, y)) {
           return false;
         }
       }
-    } else {
-      for (let i = 0; i < ship.length; i++) {
-        if (this.#isValidCoord(x + i, y) && this.grid[x + i][y] === BLANK) {
-          this.grid[x + i][y] = ship;
-        } else {
-          return false;
-        }
+    }
+
+    for (let i = 0; i < ship.length; i++) {
+      if (isHorizontal) {
+        this.grid[x][y + i] = ship;
+      } else {
+        this.grid[x + i][y] = ship;
       }
     }
 
