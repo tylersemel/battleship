@@ -1,4 +1,5 @@
 //gameboard is 10x10 board
+import test from "node:test";
 import { Gameboard } from "../models/gameboard.js";
 
 test("Check that the start grid is empty", () => {
@@ -138,7 +139,26 @@ test("Try to hit a coordinate not in the grid", () => {
   expect(gameboard.grid[0][0]).toEqual(" ");
 });
 
-test("Place every ship and check if any are sunk", () => {
+test("Sink a 3 length ship", () => {
+  const gameboard = new Gameboard();
+  const destroyer = gameboard.ships.get("Destroyer");
+
+  expect(gameboard.placeShip(destroyer, 0, 0, true)).toBeTruthy();
+  expect(gameboard.grid[0][0]).toEqual(destroyer);
+  expect(gameboard.ships.get("Destroyer")).toEqual(gameboard.grid[0][0]);
+
+  expect(gameboard.receiveAttack(0, 0)).toBeTruthy();
+  expect(gameboard.receiveAttack(0, 1)).toBeTruthy();
+  expect(gameboard.receiveAttack(0, 2)).toBeTruthy();
+  expect(gameboard.grid[0][0]).toEqual("X");
+  expect(gameboard.grid[0][1]).toEqual("X");
+  expect(gameboard.grid[0][1]).toEqual("X");
+
+  expect(destroyer.hits).toEqual(3);
+  expect(destroyer.isSunk()).toBeTruthy;
+});
+
+test("Place every ship and check if they are not sunk", () => {
   const gameboard = new Gameboard();
   const carrier = gameboard.ships.get("Carrier");
 
@@ -149,6 +169,20 @@ test("Place every ship and check if any are sunk", () => {
   gameboard.placeShip(gameboard.ships.get("Patrol Boat"), 9, 0, true);
 
   expect(gameboard.grid[1][4]).toEqual(carrier);
+  expect(gameboard.hasEveryShipSunk()).toBeFalsy();
+});
+
+test("Place every ship and check if all are are sunk", () => {
+  const gameboard = new Gameboard();
+  const carrier = gameboard.ships.get("Carrier");
+
+  gameboard.placeShip(carrier, 1, 1, true);
+  gameboard.placeShip(gameboard.ships.get("Battleship"), 3, 3, false);
+  gameboard.placeShip(gameboard.ships.get("Destroyer"), 4, 8, false);
+  gameboard.placeShip(gameboard.ships.get("Submarine"), 8, 4, true);
+  gameboard.placeShip(gameboard.ships.get("Patrol Boat"), 9, 0, true);
+
+  // carrier.sunk
   expect(gameboard.hasEveryShipSunk()).toBeFalsy();
 });
 
