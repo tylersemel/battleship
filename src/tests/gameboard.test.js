@@ -105,6 +105,39 @@ test("Place a 5 length ship vertically at coord [0, 0]", () => {
   expect(gameboard.grid[5][0]).not.toEqual(carrier);
 });
 
+test("Hit a horizontally placed 5 length ship at [0, 0]", () => {
+  const gameboard = new Gameboard();
+  const carrier = gameboard.ships.get("Carrier");
+
+  expect(gameboard.placeShip(carrier, 0, 0, true)).toBeTruthy();
+  expect(gameboard.grid[0][0]).toEqual(carrier);
+  expect(gameboard.ships.get("Carrier")).toEqual(gameboard.grid[0][0]);
+
+  expect(gameboard.receiveAttack(0, 0)).toBeTruthy();
+  expect(gameboard.grid[0][0]).toEqual("X");
+  expect(gameboard.grid[0][1]).toEqual(carrier);
+});
+
+test("Miss a horizontally placed 5 length ship at [0, 0]", () => {
+  const gameboard = new Gameboard();
+  const carrier = gameboard.ships.get("Carrier");
+
+  expect(gameboard.placeShip(carrier, 0, 0, true)).toBeTruthy();
+  expect(gameboard.grid[0][0]).toEqual(carrier);
+  expect(gameboard.ships.get("Carrier")).toEqual(gameboard.grid[0][0]);
+
+  expect(gameboard.receiveAttack(3, 3)).toBeFalsy();
+  expect(gameboard.grid[0][0]).toEqual(carrier);
+  expect(gameboard.grid[3][3]).toEqual("O");
+});
+
+test("Try to hit a coordinate not in the grid", () => {
+  const gameboard = new Gameboard();
+
+  expect(gameboard.receiveAttack(11, 3)).toBeFalsy();
+  expect(gameboard.grid[0][0]).toEqual(" ");
+});
+
 // -XCCCC^^^^
 // ^O^^^^^^^^
 // ^^^^^^^^^^

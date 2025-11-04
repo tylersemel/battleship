@@ -81,5 +81,27 @@ export class Gameboard {
     }
   }
 
-  receiveAttack(x, y) {}
+  receiveAttack(x, y) {
+    if (!this.#isValidCoord(x, y)) {
+      return false;
+    }
+
+    let hasHit = false;
+
+    for (const ship of this.ships.values()) {
+      if (this.grid[x][y] === ship) {
+        hasHit = true;
+        ship.hit();
+        break;
+      }
+    }
+
+    if (!hasHit) {
+      this.grid[x][y] = MISS;
+    } else {
+      this.grid[x][y] = HIT;
+    }
+
+    return hasHit;
+  }
 }
