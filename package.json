@@ -27,5 +27,8 @@
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "lint": "eslint",
     "test": "jest"
+  },
+  "dependencies": {
+    "node": "^25.1.0"
   }
 }
