@@ -104,4 +104,14 @@ export class Gameboard {
 
     return hasHit;
   }
+
+  hasEveryShipSunk() {
+    let allSunk = false;
+
+    for (const ship of this.ships.values()) {
+      allSunk = ship.sunk;
+    }
+
+    return allSunk;
+  }
 }

@@ -138,6 +138,20 @@ test("Try to hit a coordinate not in the grid", () => {
   expect(gameboard.grid[0][0]).toEqual(" ");
 });
 
+test("Place every ship and check if any are sunk", () => {
+  const gameboard = new Gameboard();
+  const carrier = gameboard.ships.get("Carrier");
+
+  gameboard.placeShip(carrier, 1, 1, true);
+  gameboard.placeShip(gameboard.ships.get("Battleship"), 3, 3, false);
+  gameboard.placeShip(gameboard.ships.get("Destroyer"), 4, 8, false);
+  gameboard.placeShip(gameboard.ships.get("Submarine"), 8, 4, true);
+  gameboard.placeShip(gameboard.ships.get("Patrol Boat"), 9, 0, true);
+
+  expect(gameboard.grid[1][4]).toEqual(carrier);
+  expect(gameboard.hasEveryShipSunk()).toBeFalsy();
+});
+
 // -XCCCC^^^^
 // ^O^^^^^^^^
 // ^^^^^^^^^^
