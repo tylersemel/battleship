@@ -1,5 +1,4 @@
 //gameboard is 10x10 board
-import test from "node:test";
 import { Gameboard } from "../models/gameboard.js";
 
 test("Check that the start grid is empty", () => {
@@ -182,8 +181,39 @@ test("Place every ship and check if all are are sunk", () => {
   gameboard.placeShip(gameboard.ships.get("Submarine"), 8, 4, true);
   gameboard.placeShip(gameboard.ships.get("Patrol Boat"), 9, 0, true);
 
-  // carrier.sunk
-  expect(gameboard.hasEveryShipSunk()).toBeFalsy();
+  carrier.hit();
+  carrier.hit();
+  carrier.hit();
+  carrier.hit();
+  carrier.hit();
+
+  expect(carrier.isSunk()).toBeTruthy();
+
+  gameboard.ships.get("Battleship").hit();
+  gameboard.ships.get("Battleship").hit();
+  gameboard.ships.get("Battleship").hit();
+  gameboard.ships.get("Battleship").hit();
+
+  expect(gameboard.ships.get("Battleship").isSunk()).toBeTruthy();
+
+  gameboard.ships.get("Destroyer").hit();
+  gameboard.ships.get("Destroyer").hit();
+  gameboard.ships.get("Destroyer").hit();
+
+  expect(gameboard.ships.get("Destroyer").isSunk()).toBeTruthy();
+
+  gameboard.ships.get("Submarine").hit();
+  gameboard.ships.get("Submarine").hit();
+  gameboard.ships.get("Submarine").hit();
+
+  expect(gameboard.ships.get("Submarine").isSunk()).toBeTruthy();
+
+  gameboard.ships.get("Patrol Boat").hit();
+  gameboard.ships.get("Patrol Boat").hit();
+
+  expect(gameboard.ships.get("Patrol Boat").isSunk()).toBeTruthy();
+
+  expect(gameboard.hasEveryShipSunk()).toBeTruthy();
 });
 
 // -XCCCC^^^^

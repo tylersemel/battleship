@@ -27,6 +27,7 @@ export class Gameboard {
     }
   }
 
+  getShipNames() {}
   //have 5 ships on gameboard
 
   #createShips() {
@@ -109,7 +110,7 @@ export class Gameboard {
     let allSunk = false;
 
     for (const ship of this.ships.values()) {
-      allSunk = ship.sunk;
+      allSunk = ship.isSunk();
     }
 
     return allSunk;
