@@ -216,6 +216,28 @@ test("Place every ship and check if all are are sunk", () => {
   expect(gameboard.hasEveryShipSunk()).toBeTruthy();
 });
 
+test("Get all the ship names", () => {
+  const gameboard = new Gameboard();
+
+  let names = gameboard.getShipNames();
+  expect(names.includes("Destroyer")).toBeTruthy();
+  expect(names.length).toEqual(5);
+});
+
+test("Get all missed attacks", () => {
+  const gameboard = new Gameboard();
+
+  gameboard.receiveAttack(0, 0);
+  gameboard.receiveAttack(4, 7);
+  gameboard.receiveAttack(2, 3);
+
+  const misses = gameboard.getMissedAttacks();
+  expect(misses.length).toEqual(3);
+  expect(misses[0]).toEqual([0, 0]);
+  expect(misses[1]).toEqual([2, 3]);
+  expect(misses[2]).toEqual([4, 7]);
+});
+
 // -XCCCC^^^^
 // ^O^^^^^^^^
 // ^^^^^^^^^^

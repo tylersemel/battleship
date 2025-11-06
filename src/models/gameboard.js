@@ -4,13 +4,6 @@ const GRID_SIZE = 10;
 const BLANK = " ";
 const HIT = "X";
 const MISS = "O";
-const SHIPS = [
-  "Carrier",
-  "Battleship",
-  "Destroyer",
-  "Submarine",
-  "Patrol Boat",
-];
 
 export class Gameboard {
   constructor() {
@@ -27,8 +20,15 @@ export class Gameboard {
     }
   }
 
-  getShipNames() {}
-  //have 5 ships on gameboard
+  getShipNames() {
+    let names = [];
+
+    for (const name of this.ships.keys()) {
+      names.push(name);
+    }
+
+    return names;
+  }
 
   #createShips() {
     this.ships.set("Carrier", new Ship(5));
@@ -114,5 +114,18 @@ export class Gameboard {
     }
 
     return allSunk;
+  }
+
+  getMissedAttacks() {
+    let misses = [];
+    for (let i = 0; i < GRID_SIZE; i++) {
+      for (let j = 0; j < GRID_SIZE; j++) {
+        if (this.grid[i][j] === MISS) {
+          misses.push([i, j]);
+        }
+      }
+    }
+
+    return misses;
   }
 }
